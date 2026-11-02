@@ -9,6 +9,14 @@ en de echte foto's, teksten en contactgegevens van het hotel.
 > zonder build-stap. De boekingsbalk en het contactformulier zijn *demo's* en versturen
 > nog niets. De "Boek nu"-knoppen verwijzen wel naar de echte boekingsmotor van het hotel.
 
+## Live
+
+De site draait op GitHub Pages:
+
+**<https://jalvdbroek-ship-it.github.io/hotel-rozenburg/>**
+
+Publiceren gaat automatisch bij elke push naar `main` (workflow in `.github/workflows/deploy.yml`).
+
 ## Bekijken
 
 ```bash

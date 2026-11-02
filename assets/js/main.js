@@ -1,273 +1,307 @@
-/* Hotel Rozenburg — concept interactions */
-(function () {
-  "use strict";
+/**
+ * Hotel Rozenburg — concept interactions.
+ * ESM, no global state, no implicit globals.
+ */
 
-  document.documentElement.classList.add("js");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.documentElement.classList.add("js");
 
-  /* ---------- Header: transparent over hero, solid after scroll ---------- */
-  var header = document.querySelector(".header");
-  var shell = document.querySelector(".header-shell");
-  var topbar = document.querySelector(".topbar");
+/* ------------------------------------------------------------------ */
+/* Header: transparent over the hero, solid once scrolled past it.    */
+/* ------------------------------------------------------------------ */
+const header = document.querySelector(".header");
+const headerShell = document.querySelector(".header-shell");
+const topbar = document.querySelector(".topbar");
+const toTop = document.querySelector(".to-top");
 
-  function onScroll() {
-    if (!header) return;
-    var y = window.scrollY;
-    var threshold = topbar ? topbar.offsetHeight : 0;
-    var solid = y > threshold + 30;
+function onScroll() {
+  if (!header) return;
+  const threshold = topbar ? topbar.offsetHeight : 0;
+  const solid = window.scrollY > threshold + 30;
 
-    if (shell) shell.classList.toggle("is-scrolled", solid);
-    header.classList.toggle("header--solid", solid);
-    header.classList.toggle("header--transparent", !solid);
+  headerShell?.classList.toggle("is-scrolled", solid);
+  header.classList.toggle("header--solid", solid);
+  header.classList.toggle("header--transparent", !solid);
+  toTop?.classList.toggle("is-visible", window.scrollY > 600);
+}
 
-    var top = document.querySelector(".to-top");
-    if (top) top.classList.toggle("is-visible", y > 600);
-  }
+window.addEventListener("scroll", onScroll, { passive: true });
+onScroll();
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+/* ------------------------------------------------------------------ */
+/* Mobile menu                                                          */
+/* ------------------------------------------------------------------ */
+const burger = document.querySelector(".burger");
+const menu = document.querySelector(".mobile-menu");
 
-  /* ---------- Mobile menu ---------- */
-  var burger = document.querySelector(".burger");
-  var menu = document.querySelector(".mobile-menu");
+function setMenu(open) {
+  if (!menu || !burger) return;
+  menu.classList.toggle("is-open", open);
+  burger.classList.toggle("is-open", open);
+  burger.setAttribute("aria-expanded", String(open));
+  document.body.classList.toggle("is-locked", open);
+}
 
-  function closeMenu() {
-    if (!menu || !burger) return;
-    menu.classList.remove("is-open");
-    burger.classList.remove("is-open");
-    burger.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("is-locked");
-  }
+burger?.addEventListener("click", () => setMenu(!menu.classList.contains("is-open")));
+menu?.addEventListener("click", (event) => {
+  if (event.target instanceof Element && event.target.closest("a")) setMenu(false);
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") setMenu(false);
+});
 
-  if (burger && menu) {
-    burger.addEventListener("click", function () {
-      var open = !menu.classList.contains("is-open");
-      menu.classList.toggle("is-open", open);
-      burger.classList.toggle("is-open", open);
-      burger.setAttribute("aria-expanded", String(open));
-      document.body.classList.toggle("is-locked", open);
-    });
+/* ------------------------------------------------------------------ */
+/* Hero slider                                                          */
+/* ------------------------------------------------------------------ */
+const heroSlides = Array.from(document.querySelectorAll(".hero__slide"));
+const heroDots = Array.from(document.querySelectorAll(".hero__dots button"));
+const slideCounter = document.querySelector("[data-slide-counter]");
+let heroIndex = 0;
+let heroTimer = null;
 
-    menu.addEventListener("click", function (e) {
-      if (e.target.closest("a")) closeMenu();
-    });
+function showSlide(index) {
+  if (heroSlides.length === 0) return;
+  heroIndex = (index + heroSlides.length) % heroSlides.length;
 
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeMenu();
-    });
-  }
-
-  /* ---------- Hero slider ---------- */
-  var slides = Array.prototype.slice.call(document.querySelectorAll(".hero__slide"));
-  var dots = Array.prototype.slice.call(document.querySelectorAll(".hero__dots button"));
-  var counter = document.querySelector("[data-slide-counter]");
-  var heroTimer = null;
-  var heroIndex = 0;
-
-  function showSlide(index) {
-    if (!slides.length) return;
-    heroIndex = (index + slides.length) % slides.length;
-    slides.forEach(function (s, i) { s.classList.toggle("is-active", i === heroIndex); });
-    dots.forEach(function (d, i) {
-      d.classList.toggle("is-active", i === heroIndex);
-      d.setAttribute("aria-selected", String(i === heroIndex));
-    });
-    if (counter) counter.textContent = String(heroIndex + 1).padStart(2, "0");
-  }
-
-  function startHeroTimer() {
-    if (reduceMotion || slides.length < 2) return;
-    heroTimer = window.setInterval(function () { showSlide(heroIndex + 1); }, 6500);
-  }
-
-  dots.forEach(function (dot, i) {
-    dot.addEventListener("click", function () {
-      showSlide(i);
-      window.clearInterval(heroTimer);
-      startHeroTimer();
-    });
+  heroSlides.forEach((slide, i) => slide.classList.toggle("is-active", i === heroIndex));
+  heroDots.forEach((dot, i) => {
+    dot.classList.toggle("is-active", i === heroIndex);
+    dot.setAttribute("aria-selected", String(i === heroIndex));
   });
+  if (slideCounter) slideCounter.textContent = String(heroIndex + 1).padStart(2, "0");
+}
 
-  showSlide(0);
+function startHeroTimer() {
+  if (prefersReducedMotion || heroSlides.length < 2) return;
+  heroTimer = window.setInterval(() => showSlide(heroIndex + 1), 6500);
+}
+
+function restartHeroTimer() {
+  window.clearInterval(heroTimer);
   startHeroTimer();
+}
 
-  /* ---------- Generic horizontal sliders ---------- */
-  document.querySelectorAll("[data-slider]").forEach(function (wrap) {
-    var track = wrap.querySelector(".slider__track");
-    var prev = wrap.querySelector("[data-slider-prev]");
-    var next = wrap.querySelector("[data-slider-next]");
-    if (!track) return;
+heroDots.forEach((dot, i) => dot.addEventListener("click", () => {
+  showSlide(i);
+  restartHeroTimer();
+}));
 
-    function step() {
-      var item = track.querySelector(".slider__item");
-      var amount = item ? item.getBoundingClientRect().width + 24 : track.clientWidth * 0.8;
-      return amount;
+showSlide(0);
+startHeroTimer();
+
+/* ------------------------------------------------------------------ */
+/* Horizontal sliders                                                   */
+/* ------------------------------------------------------------------ */
+document.querySelectorAll("[data-slider]").forEach((wrap) => {
+  const track = wrap.querySelector(".slider__track");
+  const prev = wrap.querySelector("[data-slider-prev]");
+  const next = wrap.querySelector("[data-slider-next]");
+  if (!track) return;
+
+  const step = () => {
+    const item = track.querySelector(".slider__item");
+    return item ? item.getBoundingClientRect().width + 24 : track.clientWidth * 0.8;
+  };
+  const scrollBy = (direction) => {
+    track.scrollBy({ left: direction * step(), behavior: prefersReducedMotion ? "auto" : "smooth" });
+  };
+
+  prev?.addEventListener("click", () => scrollBy(-1));
+  next?.addEventListener("click", () => scrollBy(1));
+});
+
+/* ------------------------------------------------------------------ */
+/* Reviews                                                              */
+/* ------------------------------------------------------------------ */
+const reviews = Array.from(document.querySelectorAll(".review"));
+const reviewDots = Array.from(document.querySelectorAll("[data-review-dot]"));
+let reviewIndex = 0;
+
+function showReview(index) {
+  if (reviews.length === 0) return;
+  reviewIndex = (index + reviews.length) % reviews.length;
+
+  reviews.forEach((review, i) => review.classList.toggle("is-active", i === reviewIndex));
+  reviewDots.forEach((dot, i) => {
+    dot.classList.toggle("is-active", i === reviewIndex);
+    dot.setAttribute("aria-selected", String(i === reviewIndex));
+  });
+}
+
+reviewDots.forEach((dot, i) => dot.addEventListener("click", () => showReview(i)));
+document.querySelector("[data-review-prev]")?.addEventListener("click", () => showReview(reviewIndex - 1));
+document.querySelector("[data-review-next]")?.addEventListener("click", () => showReview(reviewIndex + 1));
+showReview(0);
+
+/* ------------------------------------------------------------------ */
+/* Accordion                                                            */
+/* ------------------------------------------------------------------ */
+document.querySelectorAll(".accordion__trigger").forEach((trigger) => {
+  trigger.addEventListener("click", () => {
+    const item = trigger.closest(".accordion__item");
+    const open = item?.classList.toggle("is-open") ?? false;
+    trigger.setAttribute("aria-expanded", String(open));
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/* Scroll reveal                                                        */
+/* ------------------------------------------------------------------ */
+const revealTargets = Array.from(document.querySelectorAll("[data-reveal]"));
+
+function revealAll() {
+  revealTargets.forEach((el) => el.classList.add("is-visible"));
+}
+
+if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+  revealAll();
+} else {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.06 });
+
+  revealTargets.forEach((el) => {
+    const group = el.getAttribute("data-reveal");
+    if (group) {
+      const peers = Array.from(document.querySelectorAll(`[data-reveal="${group}"]`));
+      el.style.setProperty("--reveal-delay", `${peers.indexOf(el) * 90}ms`);
     }
-
-    if (prev) prev.addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: reduceMotion ? "auto" : "smooth" }); });
-    if (next) next.addEventListener("click", function () { track.scrollBy({ left: step(), behavior: reduceMotion ? "auto" : "smooth" }); });
+    observer.observe(el);
   });
 
-  /* ---------- Reviews ---------- */
-  var reviews = Array.prototype.slice.call(document.querySelectorAll(".review"));
-  var reviewDots = Array.prototype.slice.call(document.querySelectorAll("[data-review-dot]"));
-  var reviewIndex = 0;
-
-  function showReview(index) {
-    if (!reviews.length) return;
-    reviewIndex = (index + reviews.length) % reviews.length;
-    reviews.forEach(function (r, i) { r.classList.toggle("is-active", i === reviewIndex); });
-    reviewDots.forEach(function (d, i) {
-      d.classList.toggle("is-active", i === reviewIndex);
-      d.setAttribute("aria-selected", String(i === reviewIndex));
-    });
-  }
-
-  reviewDots.forEach(function (dot, i) {
-    dot.addEventListener("click", function () { showReview(i); });
-  });
-
-  var reviewPrev = document.querySelector("[data-review-prev]");
-  var reviewNext = document.querySelector("[data-review-next]");
-  if (reviewPrev) reviewPrev.addEventListener("click", function () { showReview(reviewIndex - 1); });
-  if (reviewNext) reviewNext.addEventListener("click", function () { showReview(reviewIndex + 1); });
-  showReview(0);
-
-  /* ---------- Accordion ---------- */
-  document.querySelectorAll(".accordion__trigger").forEach(function (trigger) {
-    trigger.addEventListener("click", function () {
-      var item = trigger.closest(".accordion__item");
-      var open = item.classList.toggle("is-open");
-      trigger.setAttribute("aria-expanded", String(open));
-    });
-  });
-
-  /* ---------- Scroll reveal ---------- */
-  var revealEls = document.querySelectorAll("[data-reveal]");
-  if ("IntersectionObserver" in window && !reduceMotion) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
-        io.unobserve(entry.target);
-      });
-    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
-
-    revealEls.forEach(function (el, i) {
-      var group = el.getAttribute("data-reveal");
-      if (group) {
-        var peers = document.querySelectorAll('[data-reveal="' + group + '"]');
-        el.style.setProperty("--reveal-delay", (Array.prototype.indexOf.call(peers, el) * 90) + "ms");
+  // Safety net: never leave content permanently invisible if the observer
+  // misfires. Only elements already scrolled past are forced visible, so
+  // below-the-fold content keeps its reveal animation.
+  window.setTimeout(() => {
+    const viewportBottom = window.scrollY + window.innerHeight;
+    revealTargets.forEach((el) => {
+      if (el.getBoundingClientRect().top + window.scrollY < viewportBottom) {
+        el.classList.add("is-visible");
       }
-      io.observe(el);
     });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add("is-visible"); });
-  }
+  }, 4000);
+}
 
-  /* ---------- Counting stats ---------- */
-  var counters = document.querySelectorAll("[data-count]");
-  if (counters.length && "IntersectionObserver" in window) {
-    var co = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var el = entry.target;
-        var target = parseFloat(el.getAttribute("data-count"));
-        var suffix = el.getAttribute("data-suffix") || "";
-        var duration = 1400;
-        var start = null;
+/* ------------------------------------------------------------------ */
+/* Counting stats                                                       */
+/* ------------------------------------------------------------------ */
+const counters = Array.from(document.querySelectorAll("[data-count]"));
 
-        function step(ts) {
-          if (!start) start = ts;
-          var p = Math.min((ts - start) / duration, 1);
-          var eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(target * eased) + suffix;
-          if (p < 1) window.requestAnimationFrame(step);
-        }
-        window.requestAnimationFrame(step);
-        co.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-    counters.forEach(function (c) { co.observe(c); });
-  }
+if (counters.length > 0 && "IntersectionObserver" in window) {
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = Number.parseFloat(el.getAttribute("data-count") ?? "0");
+      const suffix = el.getAttribute("data-suffix") ?? "";
+      const duration = 1400;
+      let start = null;
 
-  /* ---------- Booking bar (demo) ---------- */
-  var bookingForm = document.querySelector("[data-booking-form]");
-  if (bookingForm) {
-    var today = new Date();
-    var arrival = bookingForm.querySelector("[name=arrival]");
-    var departure = bookingForm.querySelector("[name=departure]");
-    var feedback = document.querySelector("[data-booking-feedback]");
-
-    function iso(date) { return date.toISOString().slice(0, 10); }
-    if (arrival) {
-      arrival.min = iso(today);
-      arrival.value = iso(new Date(today.getTime() + 86400000 * 2));
-    }
-    if (departure) {
-      departure.min = iso(new Date(today.getTime() + 86400000 * 3));
-      departure.value = iso(new Date(today.getTime() + 86400000 * 3));
-    }
-    if (arrival && departure) {
-      arrival.addEventListener("change", function () {
-        if (departure.value <= arrival.value) {
-          var d = new Date(arrival.value);
-          d.setDate(d.getDate() + 1);
-          departure.value = iso(d);
-        }
-        departure.min = arrival.value;
-      });
-    }
-
-    bookingForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (!feedback) return;
-      var data = new FormData(bookingForm);
-      var a = data.get("arrival");
-      var d = data.get("departure");
-      var guests = data.get("guests") || "2";
-      var nights = 1;
-      if (a && d) {
-        nights = Math.max(1, Math.round((new Date(d) - new Date(a)) / 86400000));
-      }
-      var fmt = function (isoDate) {
-        if (!isoDate) return "";
-        var dt = new Date(isoDate + "T00:00:00");
-        return dt.toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" });
+      const step = (timestamp) => {
+        if (start === null) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        const eased = 1 - (1 - progress) ** 3;
+        el.textContent = String(Math.round(target * eased)) + suffix;
+        if (progress < 1) window.requestAnimationFrame(step);
       };
-      feedback.innerHTML =
-        "<strong>Demo — beschikbaarheid.</strong> Voor " + guests + " gast(en) van " + fmt(a) +
-        " tot " + fmt(d) + " (" + nights + " nacht(en)) levert de boekingsmotor live de tarieven. " +
-        "<a class='link-underline' href='https://ibe.smarthotel.nl/?id=aa4fe399-9d43-4f9a-97b3-ec89d5967ba8&amp;segment=Hotel' target='_blank' rel='noopener'>Open de boekingsmotor</a>";
-      feedback.classList.add("is-visible");
-    });
-  }
 
-  /* ---------- Contact form (demo) ---------- */
-  var contactForm = document.querySelector("[data-contact-form]");
-  if (contactForm) {
-    contactForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var out = document.querySelector("[data-contact-feedback]");
-      if (!out) return;
-      var name = contactForm.querySelector("[name=name]");
-      out.innerHTML = "<strong>Bedankt" + (name && name.value ? ", " + name.value : "") + ".</strong> Dit is een demo: in de live versie wordt uw bericht naar info@hotel-rozenburg.nl verstuurd.";
-      out.classList.add("is-visible");
-      contactForm.reset();
+      window.requestAnimationFrame(step);
+      counterObserver.unobserve(el);
     });
-  }
+  }, { threshold: 0.5 });
 
-  /* ---------- Back to top ---------- */
-  var toTop = document.querySelector(".to-top");
-  if (toTop) {
-    toTop.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
-    });
-  }
+  counters.forEach((counter) => counterObserver.observe(counter));
+}
 
-  /* ---------- Footer year ---------- */
-  document.querySelectorAll("[data-year]").forEach(function (el) {
-    el.textContent = String(new Date().getFullYear());
+/* ------------------------------------------------------------------ */
+/* Booking bar (demo)                                                   */
+/* ------------------------------------------------------------------ */
+const bookingForm = document.querySelector("[data-booking-form]");
+
+if (bookingForm) {
+  const arrival = bookingForm.querySelector("[name=arrival]");
+  const departure = bookingForm.querySelector("[name=departure]");
+  const feedback = document.querySelector("[data-booking-feedback]");
+
+  const toIso = (date) => date.toISOString().slice(0, 10);
+  const today = new Date();
+
+  if (arrival) {
+    arrival.min = toIso(today);
+    arrival.value = toIso(new Date(today.getTime() + 86400000 * 2));
+  }
+  if (departure) {
+    departure.min = toIso(new Date(today.getTime() + 86400000 * 3));
+    departure.value = toIso(new Date(today.getTime() + 86400000 * 3));
+  }
+  arrival?.addEventListener("change", () => {
+    if (!arrival.value || !departure) return;
+    if (departure.value <= arrival.value) {
+      const next = new Date(`${arrival.value}T00:00:00`);
+      next.setDate(next.getDate() + 1);
+      departure.value = toIso(next);
+    }
+    departure.min = arrival.value;
   });
-})();
+
+  bookingForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!feedback) return;
+
+    const data = new FormData(bookingForm);
+    const arrivalDate = data.get("arrival");
+    const departureDate = data.get("departure");
+    const guests = data.get("guests") || "2";
+    const nights = arrivalDate && departureDate
+      ? Math.max(1, Math.round((new Date(departureDate) - new Date(arrivalDate)) / 86400000))
+      : 1;
+
+    const format = (value) => (value
+      ? new Date(`${value}T00:00:00`).toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" })
+      : "");
+
+    feedback.innerHTML =
+      `<strong>Demo — beschikbaarheid.</strong> Voor ${guests} gast(en) van ${format(arrivalDate)} ` +
+      `tot ${format(departureDate)} (${nights} nacht(en)) levert de boekingsmotor live de tarieven. ` +
+      `<a class="link-underline" href="https://ibe.smarthotel.nl/?id=aa4fe399-9d43-4f9a-97b3-ec89d5967ba8&amp;segment=Hotel" ` +
+      `target="_blank" rel="noopener">Open de boekingsmotor</a>`;
+    feedback.classList.add("is-visible");
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/* Contact form (demo)                                                  */
+/* ------------------------------------------------------------------ */
+const contactForm = document.querySelector("[data-contact-form]");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const output = document.querySelector("[data-contact-feedback]");
+    if (!output) return;
+
+    const nameField = contactForm.querySelector("[name=name]");
+    const name = nameField instanceof HTMLInputElement ? nameField.value.trim() : "";
+    output.innerHTML =
+      `<strong>Bedankt${name ? `, ${name}` : ""}.</strong> Dit is een demo: in de live versie ` +
+      `wordt uw bericht naar info@hotel-rozenburg.nl verstuurd.`;
+    output.classList.add("is-visible");
+    contactForm.reset();
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/* Misc                                                                 */
+/* ------------------------------------------------------------------ */
+toTop?.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+});
+
+document.querySelectorAll("[data-year]").forEach((el) => {
+  el.textContent = String(new Date().getFullYear());
+});

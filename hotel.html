@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 <a class="skip-link" href="#main">Direct naar de inhoud</a>
@@ -31,6 +32,7 @@
   <header class="header header--transparent">
     <div class="container header__inner">
       <a class="header__logo" href="index.html" aria-label="Hotel Rozenburg — naar de homepage">
+        <img class="header__crest" src="assets/img/crest-rozenburg.svg" alt="" width="179" height="269" aria-hidden="true">
         <img class="logo-light" src="assets/img/logo-hotel.png" alt="Hotel Rozenburg" width="994" height="343">
         <img class="logo-dark" src="assets/img/logo-hotel-ink.png" alt="" width="994" height="343" aria-hidden="true">
       </a>
@@ -180,37 +182,35 @@
     </div>
   </section>
 
-  <section class="section section--ink" id="vergaderen">
+  <section class="band band--right section--ink" id="vergaderen">
+    <div class="band__media">
+      <img src="assets/img/vergader-2.jpg" alt="Vergaderruimte met lange tafel en scherm" width="1400" height="933" loading="lazy">
+    </div>
     <div class="container">
-      <div class="feature">
-        <div class="feature__media" data-reveal="vergaderen">
-          <div class="media media--tall"><img src="assets/img/vergader.jpg" alt="Vergaderzaal met lange houten tafel en scherm" width="1600" height="1067" loading="lazy"></div>
-        </div>
-        <div class="feature__body" data-reveal="vergaderen">
-          <p class="eyebrow">Vergaderen &amp; zaalverhuur</p>
-          <h2>Werken in de Botlek,<br>Europoort of Maasvlakte?</h2>
-          <p class="lede">Door de locatie van ons hotel is het ideaal verblijf voor werknemers die werkzaam zijn in de Botlek, Europoort en Maasvlakte.</p>
-          <ul class="feature__list">
-            <li>Onze vergaderruimtes zijn voorzien van een beamer en/of groot scherm</li>
-            <li>Koffie, thee en frisdranken</li>
-            <li>Comfortabele kamers om te overnachten</li>
-            <li>Gratis parkeergelegenheid</li>
-          </ul>
-          <p><a class="link-arrow link-arrow--light" href="contact.html">Vraag een offerte aan</a></p>
-        </div>
+      <div class="band__body" style="max-width:34rem;margin-left:auto">
+        <p class="eyebrow is-light">Vergaderen &amp; zaalverhuur</p>
+        <h2>Werken in de Botlek,<br>Europoort of Maasvlakte?</h2>
+        <p class="lede">Door de locatie van ons hotel is het ideaal verblijf voor werknemers die werkzaam zijn in de Botlek, Europoort en Maasvlakte.</p>
+        <ul class="feature__list">
+          <li>Onze vergaderruimtes zijn voorzien van een beamer en/of groot scherm</li>
+          <li>Koffie, thee en frisdranken</li>
+          <li>Comfortabele kamers om te overnachten</li>
+          <li>Gratis parkeergelegenheid</li>
+        </ul>
+        <p style="margin-top:1.75rem"><a class="link-arrow link-arrow--light" href="contact.html">Vraag een offerte aan</a></p>
       </div>
     </div>
   </section>
 
   <section class="section" id="omgeving">
     <div class="container">
-      <div class="grid grid--sidebar" style="align-items:end;margin-bottom:clamp(2rem,4vw,3.5rem)">
-        <div data-reveal="omgeving">
+      <div class="section-head" data-reveal="omgeving">
+        <div>
           <p class="eyebrow">Liggings &amp; omgeving</p>
           <h2>Een gezellig dorp<br>met veel groen</h2>
           <p class="lede">Omringd door het enorme havengebied van Rotterdam en olieraffinaderijen vind je ons mooie dorp Rozenburg. Een gezellig dorp met veel groenvoorzieningen, ideaal voor mooie wandel- en fietstochten.</p>
         </div>
-        <div style="justify-self:end" data-reveal="omgeving">
+        <div class="section-head__aside">
           <a class="link-arrow" href="https://hotelrozenburg.nl/ligging/">Bekijk de ligging</a>
         </div>
       </div>
@@ -278,6 +278,7 @@
 
   <section class="cta-band">
     <div class="cta-band__media"><img src="assets/img/hero-room.jpg" alt="" width="1400" height="933" loading="lazy"></div>
+    <img class="cta-band__crest" src="assets/img/crest-rozenburg.svg" alt="" width="179" height="269" aria-hidden="true">
     <div class="container cta-band__inner">
       <h2>Reserveer uw kamer in Rozenburg</h2>
       <div class="hero__actions" style="margin-top:0">
@@ -293,8 +294,10 @@
   <div class="container">
     <div class="footer__grid">
       <div>
-        <img class="crest crest--footer" src="assets/img/crest-rozenburg.svg" alt="" width="179" height="269" aria-hidden="true">
-        <img class="footer__logo" src="assets/img/logo-hotel.png" alt="Hotel Rozenburg" width="994" height="343" loading="lazy">
+        <div class="footer__brand">
+          <img class="crest crest--footer" src="assets/img/crest-rozenburg.svg" alt="" width="179" height="269" aria-hidden="true">
+          <img class="footer__logo" src="assets/img/logo-hotel.png" alt="Hotel Rozenburg" width="994" height="343" loading="lazy">
+        </div>
         <p>Een beetje thuis, ver van huis. Hotel en Brasserie Noortje in het groene dorp Rozenburg, midden in Voorne Putten.</p>
         <p class="footer__payments" style="margin-top:1.4rem">
           <img src="assets/img/betaalmethoden.gif" alt="Aangenomen betaalmiddelen" width="300" height="32" loading="lazy">
@@ -341,6 +344,6 @@
 </footer>
 
 <button class="to-top" type="button" aria-label="Terug naar boven">&uarr;</button>
-<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/main.js"></script>
 </body>
 </html>

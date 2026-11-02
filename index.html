@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -61,6 +62,7 @@
   <header class="header header--transparent">
     <div class="container header__inner">
       <a class="header__logo" href="index.html" aria-label="Hotel Rozenburg — naar de homepage">
+        <img class="header__crest" src="assets/img/crest-rozenburg.svg" alt="" width="179" height="269" aria-hidden="true">
         <img class="logo-light" src="assets/img/logo-hotel.png" alt="Hotel Rozenburg" width="994" height="343">
         <img class="logo-dark" src="assets/img/logo-hotel-ink.png" alt="" width="994" height="343" aria-hidden="true">
       </a>
@@ -101,16 +103,16 @@
   <section class="hero" aria-label="Introductie">
     <div class="hero__media">
       <div class="hero__slide is-active">
-        <img src="assets/img/hero-facade.jpg" alt="De gevel van Hotel Rozenburg met het kunstwerk voor de ingang" width="2000" height="1125">
+        <img src="assets/img/room-gold-1.jpg" alt="Een van de deluxe kamers van Hotel Rozenburg" width="1400" height="933" style="--focus: 55% center">
       </div>
       <div class="hero__slide">
-        <img src="assets/img/brasserie-interior.jpg" alt="Het interieur van Brasserie Noortje met haard en groene fauteuils" width="1800" height="1200">
+        <img src="assets/img/entrance.jpg" alt="De ingang van Hotel Rozenburg met het bord van Brasserie Noortje" width="1600" height="1200" style="--focus: 72% center">
       </div>
       <div class="hero__slide">
-        <img src="assets/img/room-gold-1.jpg" alt="Een van de deluxe kamers van Hotel Rozenburg" width="1400" height="933">
+        <img src="assets/img/brasserie-interior.jpg" alt="Het interieur van Brasserie Noortje met haard en groene fauteuils" width="1800" height="1200" style="--focus: 70% center">
       </div>
       <div class="hero__slide">
-        <img src="assets/img/landschap.jpg" alt="Het groene landschap van Voorne Putten bij Rozenburg" width="1600" height="686">
+        <img src="assets/img/hero-facade.jpg" alt="De gevel van Hotel Rozenburg met de vlaggen voor de ingang" width="2000" height="1125" style="--focus: 30% center">
       </div>
     </div>
 
@@ -119,6 +121,7 @@
         <p class="eyebrow is-light">Hotel &amp; Brasserie &middot; Rozenburg</p>
         <h1 class="hero__title">Een beetje thuis,<br><em>ver van huis.</em></h1>
         <p class="hero__text">In het groene, gastvrije dorp Rozenburg staat een hotel met aandacht voor de kleine dingen. 27 kamers, een eigen brasserie en binnen vijftien minuten Brielle, het strand en de kust.</p>
+        <p class="hero__place">Emmastraat 26 &middot; 3181 GE Rozenburg</p>
         <div class="hero__actions">
           <a class="btn btn--gold" href="https://ibe.smarthotel.nl/?id=aa4fe399-9d43-4f9a-97b3-ec89d5967ba8&amp;segment=Hotel" target="_blank" rel="noopener">Boek nu</a>
           <a class="btn btn--ghost-light" href="hotel.html">Ontdek het hotel</a>
@@ -172,23 +175,32 @@
   <section class="section">
     <div class="container">
       <div class="feature">
-        <div class="feature__media" data-reveal="intro">
-          <div class="media media--tall">
-            <img src="assets/img/lobby.jpg" alt="De lounge van Hotel Rozenburg met groene fauteuils en grote ramen" width="1600" height="1067" loading="lazy">
-          </div>
-        </div>
         <div class="feature__body" data-reveal="intro">
           <p class="eyebrow">Welkom in Rozenburg</p>
           <h2>Een groen dorp aan het water,<br>een hotel met aandacht.</h2>
           <p class="lede">Hotel Rozenburg ligt in het groene, gastvrije dorp Rozenburg &mdash; een ideale plek voor ontspanning of een comfortabel verblijf tijdens uw reis.</p>
           <p>We bieden 27 stijlvolle en eigentijdse kamers, geschikt voor 1, 2 of 3 personen. Kies uit standaard of deluxe kamers, allemaal voorzien van een comfortabel bed, een eigen badkamer met toilet, flatscreen tv, gratis wifi in het hele hotel en in sommige kamers een koelkast.</p>
-          <ul class="feature__list">
-            <li>Comfortabele eenpersoonsbedden &mdash; de deluxe kamers hebben een tweepersoonsbed</li>
-            <li>Eigen badkamer met toilet, flatscreen tv en gratis wifi</li>
-            <li>Gratis parkeergelegenheid voor al onze gasten</li>
-            <li>Ontbijtbuffet in de gezellige ontbijtzaal</li>
-          </ul>
           <p><a class="link-arrow" href="hotel.html">Het hotel</a></p>
+        </div>
+        <div class="feature__media" data-reveal="intro">
+          <div class="media media--tall">
+            <img src="assets/img/lobby.jpg" alt="De lounge van Hotel Rozenburg met groene fauteuils en grote ramen" width="1600" height="1067" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="pillars" style="margin-top:clamp(2.5rem,5vw,4.5rem)" data-reveal="pillars">
+        <div class="pillar">
+          <p class="pillar__title">Ontbijt</p>
+          <p class="pillar__text">Een uitgebreid buffet in de gezellige ontbijtzaal. Maandag t/m vrijdag vanaf 06:00, in het weekend vanaf 08:00.</p>
+        </div>
+        <div class="pillar">
+          <p class="pillar__title">Parkeren</p>
+          <p class="pillar__text">Gratis parkeergelegenheid voor al onze gasten, ook bij een langer verblijf of meerdere auto's.</p>
+        </div>
+        <div class="pillar">
+          <p class="pillar__title">Wifi</p>
+          <p class="pillar__text">Gratis wifi in het hele hotel. Ook in de ontbijtzaal, de brasserie en de vergaderruimtes.</p>
         </div>
       </div>
     </div>
@@ -215,19 +227,22 @@
           <p class="stats__label">Fietsen naar Brielle</p>
         </div>
       </div>
+      <div class="divider-crest" style="margin-top:clamp(2rem,4vw,3.5rem)">
+        <img src="assets/img/crest-rozenburg.svg" alt="Wapen van Rozenburg" width="179" height="269">
+      </div>
     </div>
   </section>
 
   <!-- Rooms ---------------------------------------------------------------->
   <section class="section" id="kamers">
     <div class="container">
-      <div class="grid grid--sidebar" style="align-items:end;margin-bottom:clamp(2rem,4vw,3.5rem)">
-        <div data-reveal="rooms">
+      <div class="section-head" data-reveal="rooms">
+        <div>
           <p class="eyebrow">Kamers &amp; suites</p>
-          <h2>27 kamers, twee stijlen</h2>
+          <h2>Twee stijlen, 27 kamers</h2>
           <p class="lede">Van een compacte standaardkamer voor één tot een royale deluxe kamer met tweepersoonsbed. In alle kamers: eigen badkamer, flatscreen tv, gratis wifi en comfortabel bed.</p>
         </div>
-        <div style="justify-self:end" data-reveal="rooms">
+        <div class="section-head__aside">
           <div class="slider__nav">
             <button class="slider__btn" type="button" data-slider-prev aria-label="Vorige kamers">&larr;</button>
             <button class="slider__btn" type="button" data-slider-next aria-label="Volgende kamers">&rarr;</button>
@@ -279,31 +294,32 @@
   </section>
 
   <!-- Brasserie ------------------------------------------------------------->
-  <section class="section section--ink" id="brasserie">
+  <section class="band band--right section--ink" id="brasserie">
+    <div class="band__media">
+      <img src="assets/img/brasserie-lounge.jpg" alt="Brasserie Noortje: groene fauteuils bij de haard" width="1400" height="933" loading="lazy">
+    </div>
     <div class="container">
-      <div class="feature">
-        <div class="feature__media" data-reveal="brasserie">
-          <div class="media media--tall">
-            <img src="assets/img/brasserie-lounge.jpg" alt="Brasserie Noortje: groene fauteuils bij de haard" width="1400" height="933" loading="lazy">
-          </div>
-        </div>
-        <div class="feature__body" data-reveal="brasserie">
-          <p class="eyebrow">Brasserie Noortje</p>
-          <h2>Sfeervol genieten<br>in het hart van Rozenburg</h2>
-          <p class="lede">Bij Brasserie Noortje draait alles om smaak, gezelligheid en gastvrijheid. In een warme en moderne setting serveren wij met liefde huisgemaakte gerechten, bereid met verse ingrediënten.</p>
-          <p>Of je nu langskomt voor een ontspannen diner of een borrel met vrienden &mdash; bij ons ben je altijd welkom. Onze menukaart wisselt met de seizoenen en biedt voor ieder wat wils: van klassiekers tot verrassende specials.</p>
-          <ul class="hours">
-            <li><span>Maandag &amp; dinsdag</span><span>Gesloten</span></li>
-            <li><span>Woensdag &amp; zondag</span><span>16:00 &ndash; 22:00</span></li>
-          </ul>
-          <div class="hero__actions" style="margin-top:2rem">
-            <a class="btn btn--gold" href="tel:+31181212600">Bel voor een tafel</a>
-            <a class="btn btn--ghost-light" href="mailto:info@brasserie-noortje.nl">E-mail</a>
-          </div>
+      <div class="band__body" style="max-width:34rem;margin-left:auto">
+        <p class="eyebrow is-light">Brasserie Noortje</p>
+        <h2>Sfeervol genieten<br>in het hart van Rozenburg</h2>
+        <p class="lede">Bij Brasserie Noortje draait alles om smaak, gezelligheid en gastvrijheid. In een warme en moderne setting serveren wij met liefde huisgemaakte gerechten, bereid met verse ingrediënten.</p>
+        <p>Of je nu langskomt voor een ontspannen diner of een borrel met vrienden &mdash; bij ons ben je altijd welkom. Onze menukaart wisselt met de seizoenen en biedt voor ieder wat wils: van klassiekers tot verrassende specials.</p>
+        <ul class="hours">
+          <li><span>Maandag &amp; dinsdag</span><span>Gesloten</span></li>
+          <li><span>Woensdag &amp; zondag</span><span>16:00 &ndash; 22:00</span></li>
+        </ul>
+        <div class="hero__actions" style="margin-top:1.75rem">
+          <a class="btn btn--gold" href="tel:+31181212600">Bel voor een tafel</a>
+          <a class="btn btn--ghost-light" href="mailto:info@brasserie-noortje.nl">E-mail</a>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="grid grid--4" style="margin-top:clamp(2.5rem,5vw,4.5rem)" data-reveal="food">
+  <!-- Van de kaart ---------------------------------------------------------->
+  <section class="section--tight section--ink" style="padding-top:0">
+    <div class="container">
+      <div class="grid grid--4" data-reveal="food">
         <figure class="media media--square media--zoom" style="margin:0">
           <img src="assets/img/food-1.jpg" alt="Huisgemaakt dessert met thee" width="1200" height="1200" loading="lazy">
         </figure>
@@ -311,7 +327,7 @@
           <img src="assets/img/food-2.jpg" alt="Een gerecht wordt aan tafel opgemaakt" width="1200" height="1200" loading="lazy">
         </figure>
         <figure class="media media--square media--zoom" style="margin:0">
-          <img src="assets/img/food-3.jpg" alt="Charcuterie met verse(producten)" width="1200" height="1200" loading="lazy">
+          <img src="assets/img/food-3.jpg" alt="Charcuterie met verse producten" width="1200" height="1200" loading="lazy">
         </figure>
         <figure class="media media--square media--zoom" style="margin:0">
           <img src="assets/img/food-4.jpg" alt="Kaas en fruit op een plank" width="1200" height="1200" loading="lazy">
@@ -323,28 +339,20 @@
   <!-- Omgeving -------------------------------------------------------------->
   <section class="section" id="omgeving">
     <div class="container">
-      <div class="grid grid--sidebar" style="align-items:end;margin-bottom:clamp(2rem,4vw,3.5rem)">
-        <div data-reveal="omgeving">
+      <div class="section-head" data-reveal="omgeving">
+        <div>
           <p class="eyebrow">Voorne Putten</p>
           <h2>Ontdek het eiland</h2>
           <p class="lede">Omringd door het enorme havengebied van Rotterdam en de olieraffinaderijen vind je ons mooie dorp Rozenburg. Binnen vijftien minuten fietsen sta je in Brielle, met de stranden van Rockanje en Oostvoorne om de hoek.</p>
         </div>
-        <div style="justify-self:end" data-reveal="omgeving">
+        <div class="section-head__aside">
           <a class="link-arrow" href="hotel.html#omgeving">Bekijk de omgeving</a>
         </div>
       </div>
 
       <div class="grid grid--3" data-reveal="omgeving">
         <a class="tile" href="hotel.html#omgeving">
-          <div class="media media--tall"><img src="assets/img/landschap.jpg" alt="Winder turbines en water langs Voorne Putten" width="1600" height="686" loading="lazy"></div>
-          <div class="tile__body">
-            <h3 class="tile__title">Fietsen</h3>
-            <p class="tile__text">Vanaf het hotel fiets je binnen vijftien minuten naar het pittoreske Brielle.</p>
-            <span class="link-arrow link-arrow--light">Meer</span>
-          </div>
-        </a>
-        <a class="tile" href="hotel.html#omgeving">
-          <div class="media media--tall"><img src="assets/img/omgeving.jpg" alt="Weide en bomen in de omgeving van Rozenburg" width="1600" height="1067" loading="lazy"></div>
+          <div class="media media--tile"><img src="assets/img/omgeving.jpg" alt="Weide en bomen in de omgeving van Rozenburg" width="1600" height="1067" loading="lazy"></div>
           <div class="tile__body">
             <h3 class="tile__title">Water &amp; strand</h3>
             <p class="tile__text">Het Brielse Meer en de stranden van Rockanje en Oostvoorne liggen op een paar kilometer.</p>
@@ -352,7 +360,15 @@
           </div>
         </a>
         <a class="tile" href="hotel.html#omgeving">
-          <div class="media media--tall"><img src="assets/img/rotterdam.jpg" alt="De skyline van Rotterdam in de schemering" width="1400" height="933" loading="lazy"></div>
+          <div class="media media--tile"><img src="assets/img/landschap.jpg" alt="Winder turbines en water langs Voorne Putten" width="1600" height="686" loading="lazy"></div>
+          <div class="tile__body">
+            <h3 class="tile__title">Fietsen</h3>
+            <p class="tile__text">Vanaf het hotel fiets je binnen vijftien minuten naar het pittoreske Brielle.</p>
+            <span class="link-arrow link-arrow--light">Meer</span>
+          </div>
+        </a>
+        <a class="tile" href="hotel.html#omgeving">
+          <div class="media media--tile"><img src="assets/img/rotterdam.jpg" alt="De skyline van Rotterdam in de schemering" width="1400" height="933" loading="lazy"></div>
           <div class="tile__body">
             <h3 class="tile__title">Stad &amp; haven</h3>
             <p class="tile__text">De haven van Rotterdam, Euromast en het centrum liggen binnen een half uur rijden.</p>
@@ -366,12 +382,12 @@
   <!-- Arrangementen --------------------------------------------------------->
   <section class="section section--paper2" id="arrangementen">
     <div class="container">
-      <div class="grid grid--sidebar" style="align-items:end;margin-bottom:clamp(2rem,4vw,3.5rem)">
-        <div data-reveal="arr">
+      <div class="section-head" data-reveal="arr">
+        <div>
           <p class="eyebrow">Arrangementen</p>
           <h2>Vanuit het echte leven,<br>naar een weekendje weg</h2>
         </div>
-        <div style="justify-self:end" data-reveal="arr">
+        <div class="section-head__aside">
           <a class="link-arrow" href="arrangementen.html">Alle arrangementen</a>
         </div>
       </div>
@@ -498,6 +514,7 @@
   <!-- CTA ------------------------------------------------------------------->
   <section class="cta-band">
     <div class="cta-band__media"><img src="assets/img/hero-facade.jpg" alt="" width="2000" height="1125" loading="lazy"></div>
+    <img class="cta-band__crest" src="assets/img/crest-rozenburg.svg" alt="" width="179" height="269" aria-hidden="true">
     <div class="container cta-band__inner">
       <h2>Reserveer nu en ontdek Rozenburg</h2>
       <div class="hero__actions" style="margin-top:0">
@@ -514,8 +531,10 @@
   <div class="container">
     <div class="footer__grid">
       <div>
-        <img class="crest crest--footer" src="assets/img/crest-rozenburg.svg" alt="" width="179" height="269" aria-hidden="true">
-        <img class="footer__logo" src="assets/img/logo-hotel.png" alt="Hotel Rozenburg" width="994" height="343" loading="lazy">
+        <div class="footer__brand">
+          <img class="crest crest--footer" src="assets/img/crest-rozenburg.svg" alt="" width="179" height="269" aria-hidden="true">
+          <img class="footer__logo" src="assets/img/logo-hotel.png" alt="Hotel Rozenburg" width="994" height="343" loading="lazy">
+        </div>
         <p>Een beetje thuis, ver van huis. Hotel en Brasserie Noortje in het groene dorp Rozenburg, midden in Voorne Putten.</p>
         <p class="footer__payments" style="margin-top:1.4rem">
           <img src="assets/img/betaalmethoden.gif" alt="Aangenomen betaalmiddelen" width="300" height="32" loading="lazy">
@@ -567,6 +586,6 @@
 
 <button class="to-top" type="button" aria-label="Terug naar boven">&uarr;</button>
 
-<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/main.js"></script>
 </body>
 </html>

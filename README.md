@@ -34,10 +34,31 @@ iframe en de Google Fonts hebben dan internet nodig.
 index.html / hotel.html / restaurant.html / arrangementen.html / contact.html
 assets/
   css/style.css      volledig design system (tokens, componenten, responsive)
-  js/main.js         header, mobiel menu, sliders, reveal, formulieren, teller
-  img/               foto's, logo's en betaalmiddelen (geoptimaliseerd, ~6 MB)
+  js/main.js         header, mobiel menu, sliders, reveal, formulieren, teller (ESM)
+  img/               foto's, logo's en betaalmiddelen (geoptimaliseerd, ~4,7 MB)
 server.mjs           kleine statische server voor lokaal preview
 ```
+
+`main.js` is een ES-module (`<script type="module">`) zonder globale state.
+
+## Layout & ritme
+
+Om te voorkomen dat de site als een reeks identieke blokken leest, wisselen de
+pagina's af tussen vier layouts:
+
+| Layout | Gebruikt voor |
+| --- | --- |
+| `.feature` | tekst + beeld naast elkaar (intro, kamers, ontbijt) |
+| `.band` | full-bleed foto met tekst erover (brasserie, vergaderen, openingstijden) |
+| `.grid--3` / `.tile` | drie beelden naast elkaar (omgeving, arrangementen) |
+| `.card` | tekstkaarten met eigen kop (kamertypes, speciales) |
+
+Daarbovenop: `.section-head` (kop + aside op één basislijn), `.pillars` (drie korte
+kolommen), `.divider-crest` (wapen-scheiding) en een `.stats`-band.
+
+De hero is een beeldrotatie met per beeld een eigen `--focus`, plus een zachte scrim
+(`radial-gradient`) die precies over de koptekst ligt zodat de tekst altijd leesbaar
+blijft, ook op drukke foto's.
 
 ## Design
 
@@ -59,19 +80,34 @@ beide via Google Fonts met system-fallbacks.
 `assets/img/crest-rozenburg.svg` is het officiële **wapen van Rozenburg** (goud met twee
 rode palen, twee gouden rozen en een zilveren toren), in tekening van de Hoge Raad van
 Adel via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Rozenburg_wapen.svg)
-(public domain). Het wordt zeer subtiel ingezet:
+(public domain). Het is zichtbaar aanwezig, zonder te schreeuwen:
 
-- een minuscuul schildje in de topbar naast het adres;
-- een klein schildje boven de wordmark in de footer;
-- een klein ornament boven de titel op de binnenpagina's;
-- het heraldische rood (`--rozenburg-red`) in het lijntje vóór de eyebrow-labels, de actieve
-  review-dot en de hover van de "lees meer"-links.
+- een schildje naast de wordmark in de header (de "lockup");
+- een schildje naast de wordmark in de footer;
+- een schildje boven de titel op de binnenpagina's;
+- een schildje tussen twee haarlijnen als sectiescheider;
+- een groot silhouet (10% opacity) als watermerk in de CTA-band;
+- een minuscuul schildje in de topbar naast het adres.
+
+Het heraldische rood (`--rozenburg-red`, `#a11a20`) loopt door de site: de 2px-lijn
+onder de topbar, de onderstreping van de actieve navigatie, het lijntje vóór de
+eyebrow-labels, de actieve review-dot en de hover van de "lees meer"-links. Het goud
+(`--gold`, `#cdb382`) blijft de primaire merk- en knopkleur, zodat de knoppen
+onmiddellijk herkenbaar blijven.
 
 Het logo van het hotel zelf is ongewijzigd overgenomen.
 
 Kenmerken: transparante header over de hero die vastplakt bij scrollen, hairline-lijnen
 in plaats van kaders, kleine uppercase labels met ruime letterspacing, grote
 full-bleed-beelden, donkere secties voor de brasserie en de reviews.
+
+### Robuustheid
+
+- Zonder JavaScript blijft alle tekst leesbaar (`<noscript>`-fallback).
+- De scroll-reveal heeft een vangnet: content die al voorbij het viewport ligt, wordt
+  altijd zichtbaar gemaakt, ook als de IntersectionObserver niet vuurt.
+- `prefers-reduced-motion` schakelt alle animaties uit.
+- Er is een printstylesheet dat de donkere vlakken en vaste elementen vereenvoudigt.
 
 ## Wat er nog moet gebeuren voor livegang
 

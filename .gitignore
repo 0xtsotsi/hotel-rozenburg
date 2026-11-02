@@ -1,0 +1,16 @@
+# Tool- en scratchbestanden
+.gg/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Systeem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Lokaal
+*.local
+.env
+.env.*

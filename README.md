@@ -11,13 +11,13 @@ en de echte foto's, teksten en contactgegevens van het hotel.
 
 ## Git
 
-De code staat in de repository `jalvdbroek-ship-it/hotel-rozenburg`. Elke push naar `main` publiceert de site opnieuw op GitHub Pages (workflow in `.github/workflows/deploy.yml`).
+De code staat in de repository `0xtsotsi/hotel-rozenburg`. Elke push naar `main` publiceert de site opnieuw op GitHub Pages (workflow in `.github/workflows/deploy.yml`).
 
 ## Live
 
 De site draait op GitHub Pages:
 
-**<https://jalvdbroek-ship-it.github.io/hotel-rozenburg/>**
+**<https://0xtsotsi.github.io/hotel-rozenburg/>**
 
 Publiceren gaat automatisch bij elke push naar `main` (workflow in `.github/workflows/deploy.yml`).
 
